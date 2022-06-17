@@ -1,9 +1,16 @@
+import { useContext } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../auth/authContext";
+import { types } from "../../types/types";
 
 const Navbar = () => {
   const navigate = useNavigate();
-
+  const { user, dispatch } = useContext(AuthContext);
   const handleLogout = () => {
+    dispatch({
+      type: types.logout
+    })
+    localStorage.removeItem('user');
     navigate('login', {
       replace: true
     })
@@ -51,7 +58,7 @@ const Navbar = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Rolando Guerra
+                {user.name}
               </Link>
               <ul
                 className="dropdown-menu dropdown-menu-end dropdown-menu-lg-start"
